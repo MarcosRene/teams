@@ -1,13 +1,10 @@
-import styled from 'styled-components/native'
+import styled, { css } from 'styled-components/native'
 
 export const Container = styled.View`
-  flex: 1;
-  background-color: #000000;
-  align-items: center;
-  justify-content: center;
+  ${({ theme }) => css`
+    flex: 1;
+    padding: 24px;
+    background-color: ${theme.COLORS.GRAY_700};
+  `}
 `
 
-export const Title = styled.Text`
-  font-size: 32px;
-  color: #ffffff;
-`
