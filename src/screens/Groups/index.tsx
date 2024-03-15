@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FlatList } from 'react-native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+
+import { groupsGetAll } from '@/storage/group/groupsGetAll';
 
 import { Button } from '@/components/Button';
 import { Header } from '@/components/Header';
@@ -10,7 +13,28 @@ import { ListEmpty } from '@/components/ListEmpty';
 import { Container } from './styles';
 
 export function Groups() {
+  const navigation = useNavigation();
+
   const [groups, setGroups] = useState<string[]>([]);
+
+  function handleNewGroup() {
+    navigation.navigate('new');
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchGroups() {
+        try {
+          const data = await groupsGetAll();
+          setGroups(data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      fetchGroups();
+    }, [])
+  );
 
   return (
     <Container>
@@ -19,7 +43,7 @@ export function Groups() {
       <Highlight title="Turmas" subtitle="Jogue com a sua turma" />
 
       <FlatList
-        data={[]}
+        data={groups}
         keyExtractor={(item) => item}
         renderItem={({ item }) => <GroupCard title={item} />}
         contentContainerStyle={groups.length === 0 && { flex: 1 }}
@@ -28,7 +52,7 @@ export function Groups() {
         )}
       />
 
-      <Button title="Criar nova turma" />
+      <Button title="Criar nova turma" onPress={handleNewGroup} />
     </Container>
   );
 }
