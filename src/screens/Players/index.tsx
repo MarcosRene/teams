@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert, FlatList } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 
 import { AppError } from '@/utils/AppError';
 import { playerAddByGroup } from '@/storage/player/playerAddByGroup';
-import { playersGetByGroup } from '@/storage/player/playersGetByGroup';
+import { playerGetByGroupAndTeam } from '@/storage/player/playerGetByGroupAndTeam';
+import { PlayerStorageDTO } from '@/storage/player/PlayerStorageDTO';
 
 import { Button } from '@/components/Button';
 import { ButtonIcon } from '@/components/ButtonIcon';
@@ -26,7 +27,7 @@ export function Players() {
   const { group } = route.params as RouteParams;
 
   const [team, setTeam] = useState('Time A');
-  const [players, setPlayers] = useState<string[]>([]);
+  const [players, setPlayers] = useState<PlayerStorageDTO[]>([]);
   const [newPlayerName, setNewPlayerName] = useState('');
 
   async function handleAddPlayer() {
@@ -44,9 +45,7 @@ export function Players() {
 
     try {
       await playerAddByGroup(newPlayer, group);
-      const players = await playersGetByGroup(group);
-
-      console.log('players', players);
+      fetchPlayersByTeam();
     } catch (error) {
       if (error instanceof AppError) {
         Alert.alert('Nova pessoa', error.message);
@@ -55,6 +54,27 @@ export function Players() {
       }
     }
   }
+
+  async function fetchPlayersByTeam() {
+    try {
+      const playersByTeam = await playerGetByGroupAndTeam(group, team);
+
+      setPlayers(playersByTeam);
+    } catch (error) {
+      Alert.alert(
+        'Pessoas',
+        'Não foi possível carregar as pessoas filtradas do time selecionado.'
+      );
+    }
+  }
+
+  function handleRemovePlayers(item: PlayerStorageDTO) {
+    setPlayers(players.filter((play) => play.name !== item.name));
+  }
+
+  useEffect(() => {
+    fetchPlayersByTeam();
+  }, [team]);
 
   return (
     <Container>
@@ -91,11 +111,11 @@ export function Players() {
 
       <FlatList
         data={players}
-        keyExtractor={(item) => item}
+        keyExtractor={(item) => item.name}
         renderItem={({ item }) => (
           <PlayCard
-            name={item}
-            onRemove={() => setPlayers(players.filter((play) => play !== item))}
+            name={item.name}
+            onRemove={() => handleRemovePlayers(item)}
           />
         )}
         ListEmptyComponent={() => (
