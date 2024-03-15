@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components'
 
 import { Loading } from '@/components/Loading'
 
-import { NewGroup } from '@/screens/NewGroup'
+import { Routes } from './src/routes'
 
 import theme from './src/theme'
 
@@ -16,7 +16,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <StatusBar style='light' translucent />
-      {isFontsLoaded ? <NewGroup /> : <Loading />}
+      {isFontsLoaded ? <Routes /> : <Loading />}
     </ThemeProvider>
   )
 }
