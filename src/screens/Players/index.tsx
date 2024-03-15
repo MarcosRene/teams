@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { FlatList } from 'react-native';
 
-import { Filter } from '@components/Filter';
-import { ButtonIcon } from '@components/ButtonIcon';
-import { Header } from '@components/Header';
-import { Highlight } from '@components/Highlight';
-import { Input } from '@components/Input';
-import { ListEmpty } from '@components/ListEmpty';
-import { PlayCard } from '@components/PlayCard';
+import { Filter } from '@/components/Filter';
+import { ButtonIcon } from '@/components/ButtonIcon';
+import { Header } from '@/components/Header';
+import { Highlight } from '@/components/Highlight';
+import { Input } from '@/components/Input';
+import { ListEmpty } from '@/components/ListEmpty';
+import { PlayCard } from '@/components/PlayCard';
 
 import { Container, Form, HeaderList, NumbersOfPlayers } from './styles';
-import { Button } from '@components/Button';
+import { Button } from '@/components/Button';
 
 export function Players() {
   const [team, setTeam] = useState('Time A');

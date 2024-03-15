@@ -1,10 +1,9 @@
-import { Button } from '@components/Button';
-import { Header } from '@components/Header';
-import { Highlight } from '@components/Highlight';
-import { Input } from '@components/Input';
+import { Button } from '@/components/Button';
+import { Header } from '@/components/Header';
+import { Highlight } from '@/components/Highlight';
+import { Input } from '@/components/Input';
 
 import { Container, Content, Icon } from './styles';
-import { SafeAreaView } from 'react-native';
 
 export function NewGroup() {
   return (
