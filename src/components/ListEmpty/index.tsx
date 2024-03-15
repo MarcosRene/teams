@@ -4,7 +4,7 @@ type ListEmptyProps = {
   message: string;
 }
 
-export function ListEmpry({ message }: ListEmptyProps) {
+export function ListEmpty({ message }: ListEmptyProps) {
   return (
     <Container>
       <Message>{message}</Message>

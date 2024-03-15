@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components'
 
 import { Loading } from '@components/Loading'
 
-import { Groups } from '@screens/Groups'
+import { Players } from '@screens/Players'
 
 import theme from './src/theme'
 
@@ -15,8 +15,8 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <StatusBar style='light' translucent/>
-      {isFontsLoaded ? <Groups /> : <Loading />}
+      <StatusBar style='light' translucent />
+      {isFontsLoaded ? <Players /> : <Loading />}
     </ThemeProvider>
   )
 }
